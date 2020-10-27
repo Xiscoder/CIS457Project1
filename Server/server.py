@@ -50,7 +50,7 @@ def retrieveFile(conn, fileName):
 # CODE ENTERS HERE
 # 127.0.0.1 is local host
 host = "127.0.0.1"
-port = 1000
+port = 2222
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host, port))
 s.listen()
