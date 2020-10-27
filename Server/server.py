@@ -55,10 +55,10 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host, port))
 s.listen()
 print("SERVER IS RUNNING")
-conn, client = s.accept()
-with conn:
+hostaddr, port = s.accept()
+with hostaddr:
     while(True):
-        Data = conn.recv(1024).decode()
+        Data = hostaddr.recv(1024).decode()
         print("DATA RECEIVED FROM CLIENT: ", Data)
         #split data so we can access different parts of the command
         Data = Data.split(" ")
@@ -67,13 +67,13 @@ with conn:
 
         if Data[0] == "QUIT":
             print("ENDING SESSION")
-            conn.sendall("\nENDING SESSION".encode())
+            hostaddr.sendall("\nENDING SESSION".encode())
             break
         elif Data[0] == "LIST":
-            listFilesInDir(conn)
+            listFilesInDir(hostaddr)
         elif Data[0] == "STORE":
-                storeFile(conn, Data[1], Data[2])
+                storeFile(hostaddr, Data[1], Data[2])
         elif Data[0] == "RETRIEVE":
-                retrieveFile(conn, Data[1])   
+                retrieveFile(hostaddr, Data[1])   
         else:
-            conn.sendall("Command must be: QUIT, LIST, STORE or RETRIEVE".encode())
+            hostaddr.sendall("Command must be: QUIT, LIST, STORE or RETRIEVE".encode())
